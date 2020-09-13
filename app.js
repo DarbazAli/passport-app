@@ -1,4 +1,10 @@
 const express = require('express')
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const localStrategy = require('passport-local');
+
+
 
 const app = express();
 
@@ -10,6 +16,14 @@ app.set('view engine', 'pug');
 
 // serve static files
 app.use(express.static(__dirname + '/public'));
+
+
+// setup session
+app.use(session({
+    secret: 'my_top_secret',
+    resave: true,
+    saveUninitialized: true
+}))
 
 // create the home url
 app.get('/', (req, res) => {
