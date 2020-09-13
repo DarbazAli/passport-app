@@ -46,10 +46,29 @@ app
     .route('/login')
     .get((req, res) => res.render('login'))
 
+    .post(passport.authenticate('local', {
+        failureRedirect: '/login',
+        successRedirect: '/dashboard'
+    }))
+
+
+passport.use( new localStrategy( 
+    (usernmae, password, done) => {
+        if ( usernmae == 'test@gmail.com' && password == '1234') {
+            return done(null, {usernmae: 'test@gmail.com'})
+        }
+
+        else {
+           return done(null, false)
+        }
+    }
+ ))
+
 
 app
     .route('/dashboard')
-    .get((req, res) => res.render('dashboard'))
+    .get( isLoggedIn, (req, res) => res.render('dashboard'))
+
 
 
 
