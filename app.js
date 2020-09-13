@@ -25,6 +25,13 @@ app.use(session({
     saveUninitialized: true
 }))
 
+
+// setup passport middlware setup
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
 // create the home url
 app.get('/', (req, res) => {
     res.render('index', {title: 'Home', message: "Hello There"})
@@ -43,3 +50,15 @@ app
 app
     .route('/dashboard')
     .get((req, res) => res.render('dashboard'))
+
+
+
+function isLoggedIn(req, res, next) {
+    if ( req.isAuthenticated()) {
+        return next()
+    }
+
+    else {
+       return res.redirect('/login')
+    }
+}
