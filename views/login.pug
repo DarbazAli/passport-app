@@ -1,0 +1,18 @@
+doctype html
+html
+    include ./head.pug
+    body
+
+        h1 Login
+        a(href="/") Home
+        a(href="/login") Login
+        a(href="/dashboard") Dashboard
+
+        form(action="/login" method="POST")
+            label(for="email") Email
+            input(type="email", name="email")
+
+            label(for="password") Password
+            input(type="password", name="password")
+
+        include ./footer.pug

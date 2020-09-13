@@ -19,3 +19,8 @@ app.get('/', (req, res) => {
 app.get('/about', (req, res) => {
     res.render('about')
 })
+
+
+app
+    .route('/login')
+    .get((req, res) => res.render('login'))
