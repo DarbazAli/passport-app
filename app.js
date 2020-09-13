@@ -24,3 +24,8 @@ app.get('/about', (req, res) => {
 app
     .route('/login')
     .get((req, res) => res.render('login'))
+
+
+app
+    .route('/dashboard')
+    .get((req, res) => res.render('dashboard'))
