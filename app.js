@@ -53,6 +53,17 @@ app
         successRedirect: '/dashboard'
     }))
 
+app
+    .route('/dashboard')
+    .get( isLoggedIn, (req, res) => res.render('dashboard'))
+
+app
+    .route('/logout')
+    .get((req, res) => {
+        req.logout();
+        res.redirect('/login');
+    })
+
 
 passport.use( new localStrategy( 
     (username, password, done) => {
@@ -75,9 +86,7 @@ passport.use( new localStrategy(
      done(null, {username: username})
  })
 
-app
-    .route('/dashboard')
-    .get( isLoggedIn, (req, res) => res.render('dashboard'))
+
 
 
 
