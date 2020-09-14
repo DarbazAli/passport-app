@@ -2,7 +2,7 @@ const express = require('express')
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const passport = require('passport');
-const localStrategy = require('passport-local');
+const localStrategy = require('passport-local').Strategy;
 
 
 
@@ -16,6 +16,8 @@ app.set('view engine', 'pug');
 
 // serve static files
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
 
 
 // setup session
@@ -53,9 +55,9 @@ app
 
 
 passport.use( new localStrategy( 
-    (usernmae, password, done) => {
-        if ( usernmae == 'test@gmail.com' && password == '1234') {
-            return done(null, {usernmae: 'test@gmail.com'})
+    (username, password, done) => {
+        if ( username == 'test@gmail.com' && password == '1234') {
+            return done(null, {username: 'test@gmail.com'})
         }
 
         else {
@@ -64,6 +66,14 @@ passport.use( new localStrategy(
     }
  ))
 
+
+ passport.serializeUser((user, done) =>  {
+     done(null, user.username)
+ })
+
+ passport.deserializeUser((username, done) => {
+     done(null, {username: username})
+ })
 
 app
     .route('/dashboard')
